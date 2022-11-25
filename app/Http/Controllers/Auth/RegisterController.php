@@ -38,30 +38,69 @@ class RegisterController extends Controller
      */
     protected function validator(array $data)
     {
-        return Validator::make($data, [
-            'name' => ['string', 'required', 'max:255'],
-            'email' => ['required', 'string', 'email', 'max:255', 'unique:users'],
-            'contact_number' => ['required', 'string', 'min:8','max:11', 'unique:users'],
-            'password' => ['required', 'string', 'min:8', 'confirmed'],
-            'terms_and_conditions' => 'accepted',
-        ]);
+     
+        $user_type      = $data['user_type'];
+
+        if($user_type == 'student'){
+            return Validator::make($data,
+             [
+                'name' => ['required', 'max:255'],
+                'email' => ['required', 'email', 'max:255', 'unique:users'],
+                'contact_number' => ['required', 'min:8','max:11', 'unique:users'],
+                'address' => ['required'],
+                'password' => ['required', 'min:8', 'confirmed'],
+                'terms_and_conditions' => 'accepted',
+                
+                'grade_section'   => ['required'],
+                'lrn'   => ['required'],
+                'student_id'   => ['required'],
+            ]);
+        }
+        if($user_type == 'teacher'){
+            return Validator::make($data,
+             [
+                'name' => ['required', 'max:255'],
+                'email' => ['required', 'email', 'max:255', 'unique:users'],
+                'contact_number' => ['required', 'min:8','max:11', 'unique:users'],
+                'address' => ['required'],
+                'password' => ['required', 'min:8', 'confirmed'],
+                'terms_and_conditions' => 'accepted',
+                'teacher_id'   => ['required'],
+            ]);
+        }
+        if($user_type == 'non_personnel'){
+            return Validator::make($data,
+             [
+                'name' => ['required', 'max:255'],
+                'email' => ['required', 'email', 'max:255', 'unique:users'],
+                'contact_number' => ['required', 'min:8','max:11', 'unique:users'],
+                'address' => ['required'],
+                'password' => ['required', 'min:8', 'confirmed'],
+                'terms_and_conditions' => 'accepted',
+                'non_personnel_id'   => ['required'],
+            ]);
+        }
     }
 
-    /**
-     * Create a new user instance after a valid registration.
-     *
-     * @param  array  $data
-     * @return \App\Models\User
-     */
+ 
     protected function create(array $data)
     {
         return User::create([
             'name' => $data['name'],
             'email' => $data['email'],
             'contact_number' => $data['contact_number'],
+            'address' => $data['address'],
             'password' => Hash::make($data['password']),
 
-            'role' => 'patient',
+            'grade_section' => $data['grade_section'],
+            'lrn' => $data['lrn'],
+            'student_id' => $data['student_id'],
+
+            'teacher_id' => $data['teacher_id'],
+
+            'non_personnel_id' => $data['non_personnel_id'],
+
+            'role' => $data['user_type'],
         ]);
     }
 }

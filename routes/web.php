@@ -13,9 +13,8 @@ Route::get('/migrate-fresh', function() {
     // return what you want
 });
 
-Auth::routes(['verify' => true]);
 
-Route::group(['prefix' => 'patient', 'as' => 'patient.', 'namespace' => 'Patient', 'middleware' => ['auth', 'verified']], function () {
+Route::group(['prefix' => 'patient', 'as' => 'patient.', 'namespace' => 'Patient', 'middleware' => ['auth']], function () {
    
     //User Update
     Route::get('update', 'UserController@updateshow')->name('updateshow');
@@ -27,7 +26,7 @@ Route::group(['prefix' => 'patient', 'as' => 'patient.', 'namespace' => 'Patient
 
 });
 
-Route::group(['prefix' => 'patient', 'as' => 'patient.', 'namespace' => 'Patient', 'middleware' => ['auth', 'verified', 'checkregistered']], function () {
+Route::group(['prefix' => 'patient', 'as' => 'patient.', 'namespace' => 'Patient', 'middleware' => ['auth']], function () {
    
     // 
     Route::resource('appointment', 'AppointmentController');

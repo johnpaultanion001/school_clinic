@@ -1,5 +1,5 @@
 <?php
 
 return [
-    'site_title' => 'Rizal Provincial Hospital',
+    'site_title' => 'JOSE FABELLA MEMORIAL SCHOOL CLINIC',
 ];

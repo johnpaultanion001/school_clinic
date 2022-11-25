@@ -3,9 +3,9 @@
         <div class="navbar-translate">
          <a href="/">
          
-            <img src="{{ asset('/assets/img/logo.jpg') }}" width="80" alt="logo" style="border-radius: 40px;"> 
+            <!-- <img src="{{ asset('/assets/img/logo.jpg') }}" width="80" alt="logo" style="border-radius: 40px;">  -->
             <a class="font-weight-bold navbar-brand ml-2" href="/">
-              {{ trans('panel.site_title') }}
+              LOGO
             </a>
             
           </a>
@@ -22,41 +22,15 @@
         <div class="collapse navbar-collapse">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-              <a class="nav-link" href="/patient/home">
+              <a class="nav-link" href="/">
               <i class="fas fa-address-card fa-lg p-2"></i> Home
               </a>
             </li>
 
-           
-            <li class="dropdown nav-item">
-              <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
-                <i class="material-icons">apps</i> Services
+            <li class="nav-item">
+              <a class="nav-link" href="/patient/appointment" >
+                <i class="far fa-envelope fa-lg p-2"></i> Appointment
               </a>
-              <div class="dropdown-menu dropdown-with-icons">
-                <a href="/patient/appointment" class="dropdown-item">
-                  <i class="far fa-calendar-plus fa-lg p-2"></i> Appointment
-                </a>
-                <a href="/admin/patients/finder/doctor" class="dropdown-item">
-                  <i class="fas fa-search fa-lg p-2"></i> Finder Doctor
-                </a>
-              </div>
-              
-            </li>
-
-            
-
-            <li class="dropdown nav-item">
-              <a href="#" class="dropdown-toggle nav-link " data-toggle="dropdown">
-                <i class="fas fa-address-card fa-lg p-2"></i> About Us
-              </a>
-              <div class="dropdown-menu dropdown-with-icons">
-                <a href="/#about" class="dropdown-item" onclick="scrollToAbout()">
-                  <i class="far fa-calendar-plus fa-lg p-2"></i> ABOUT HOSPITAL
-                </a>
-                <a href="/#news" class="dropdown-item" onclick="scrollToNews()">
-                  <i class="far fa-envelope fa-lg p-2"></i> NEWS
-                </a> 
-              </div>
             </li>
 
             
@@ -103,8 +77,14 @@
                       <a href="/login" class="dropdown-item">
                           <i class="fas fa-sign-in-alt fa-lg p-2"></i> Login
                       </a>
-                      <a href="/register" class="dropdown-item">
-                      <i class="fas fa-user-plus fa-lg p-2"></i> Register
+                      <a href="/register?user_type=student" class="dropdown-item">
+                        <i class="fas fa-user-plus fa-lg p-2"></i> Register Student
+                      </a>
+                      <a href="/register?user_type=teacher" class="dropdown-item">
+                        <i class="fas fa-user-plus fa-lg p-2"></i> Register Teacher
+                      </a>
+                      <a href="/register?user_type=non_personnel" class="dropdown-item">
+                        <i class="fas fa-user-plus fa-lg p-2"></i> Register Non Personnel
                       </a>
                   </div>
               </li>
