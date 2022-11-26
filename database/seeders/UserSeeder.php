@@ -20,11 +20,29 @@ class UserSeeder extends Seeder
                 'name'           => 'Admin',
                 'email'          => 'admin@admin.com',
                 'password'       => '$2y$10$zPiaTbYwkxYcejFmEimhWedeAogTJvEb/yGmBVx390ihhPFy8r896' ,//password
-                
+                'address'        => 'test address',
+                'contact_number' => '09111111111',
 
     
                 'remember_token' => null,
                 'role' => 'admin',
+            
+                'created_at' => date("Y-m-d H:i:s"),
+                'updated_at' => date("Y-m-d H:i:s"),
+                'email_verified_at' => date("Y-m-d H:i:s"),
+            ],
+
+            [
+                'id'             => 2,
+                'name'           => 'Sample User',
+                'email'          => 'user@user.com',
+                'password'       => '$2y$10$zPiaTbYwkxYcejFmEimhWedeAogTJvEb/yGmBVx390ihhPFy8r896' ,//password
+                'address'        => 'test address',
+                'contact_number' => '09121111111',
+
+    
+                'remember_token' => null,
+                'role' => 'student',
             
                 'created_at' => date("Y-m-d H:i:s"),
                 'updated_at' => date("Y-m-d H:i:s"),

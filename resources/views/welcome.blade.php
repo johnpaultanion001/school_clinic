@@ -40,9 +40,6 @@
                 <div class="postcard__bar"></div>
                 <div class="postcard__preview-txt">  {{\Illuminate\Support\Str::limit($announcement->body,150)}}
                 </div>
-                <ul class="postcard__tagbox">
-                  <button type="button" name="view" id="view" view="{{  $announcement->id ?? '' }}" class="view tag__item"><i class="fas fa-eye fa-lg p-2"></i>View NEWS</button>
-                </ul>
             </div>
           </article>
         @endforeach

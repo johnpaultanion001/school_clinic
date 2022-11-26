@@ -25,14 +25,13 @@
          
           <div class="col-md-12 text-right">
                 <div class="dropdown">
-                    <button class="btn btn-primary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                      ADD APPOINTMENT
+                    <button class="btn btn-success dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                      APPOINTMENT
                     </button>
                     <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                      <a class="dropdown-item create_record" href="#" category="MEDICAL SERVICES">MEDICAL SERVICES</a>
-                      <a class="dropdown-item create_record" href="#" category="LABORATORY TEST">LABORATORY TESTS</a>
+                      <a class="dropdown-item create_record" href="#" >MAKE APPOINTMENT</a>
+                     
                       <a class="dropdown-item" id="btn_print_modal"  href="#">PRINT APPOINTMENT</a>
-                      
                     </div>
                 </div>
           
@@ -45,20 +44,12 @@
                     <div class="col-md-6">
                           <div class="card">
                             <div class="card-body">
-                              <h5 class="card-title">{{$appointment->service->name}}</h5>
-                              <h6 class="card-subtitle mb-2 text-dark">{{ \Carbon\Carbon::parse($appointment->date)->isoFormat('MMM Do YYYY')}} at {{$appointment->time}}</h6>
-                              <p class="card-text">{{$appointment->note}}</p>
                                 <div class="row">
-                                  <div class="col-sm-12">
-                                    <h6 class="card-subtitle mb-2 text-dark">Assigned Doctor:</h6>
-                                      <p class="badge badge-success">{{$appointment->doctor->name ?? 'N/A'}}</p>
-                                  
-                                  </div>
-                                  <div class="col-sm-6">
-                                    <h6 class="card-subtitle mb-2 text-dark">REF #:</h6>
+                                  <div class="col-sm-6 mt-4">
+                                    <h6 class="card-subtitle mb-2 text-dark">Appointment ID:</h6>
                                     <p class="badge badge-dark">{{$appointment->ref_number}}</p>
                                   </div>
-                                  <div class="col-sm-6">
+                                  <div class="col-sm-6 mt-4">
                                     @if($appointment->status == 'PENDING')
                                       <h6 class="card-subtitle mb-2 text-dark">STATUS:</h6>
                                       <p class="badge badge-warning">Pending</p><br>
@@ -78,15 +69,31 @@
                                     @elseif ($appointment->status == 'FAILED')
                                       <h6 class="card-subtitle mb-2 text-dark">STATUS:</h6>
                                       <p class="badge badge-danger">Failed</p>
+                                    @elseif($appointment->status == 'CANCELED')
+                                      <h6 class="card-subtitle mb-2 text-dark">STATUS:</h6>
+                                      <p class="badge badge-danger">Canceled</p>
                                     @endif
                                   </div>
+                                  <div class="col-sm-6 mt-4">
+                                    <h6 class="card-subtitle mb-2 text-dark">Symtoms:</h6>
+                                    <p>{{$appointment->symtoms ?? ''}}</p>
+                                  </div>
+                                  <div class="col-sm-6 mt-4">
+                                    <h6 class="card-subtitle mb-2 text-dark">Appointment Date & Time:</h6>
+                                    <p>{{ \Carbon\Carbon::parse($appointment->date)->isoFormat('MMM Do YYYY')}} at {{$appointment->time}}</p>
+                                  </div>
 
-                                  <div class="col-sm-12">
+                                  <div class="col-sm-6 mt-4">
+                                    <h6 class="card-subtitle mb-2 text-dark">Be specify:</h6>
+                                    <p>{{$appointment->note ?? ''}}</p>
+                                  </div>
+
+                                  <div class="col-sm-12 d-flex justify-content-between">
                                   @if($appointment->status == 'PENDING')
                                     <button type="button" name="edit" edit="{{  $appointment->id ?? '' }}"  class="edit btn btn-sm btn-primary">Edit Info.</button>
                                     <button type="button" name="cancel" cancel="{{  $appointment->id ?? '' }}"  class="cancel btn btn-sm btn-danger">Cancel</button>
-                                  @elseif($appointment->status == 'APPROVED')
-                                  <button type="button" name="cancel" cancel="{{  $appointment->id ?? '' }}"  class="cancel btn btn-sm btn-danger">Cancel</button>
+                                  @elseif($appointment->status == 'CANCELED')
+
                                   @else
                                     <br>
                                       <h6 class="card-subtitle mb-2 text-muted">Admin Comment:</h6>
@@ -95,12 +102,6 @@
                                       
                                   </div>
                                 </div>
-                               
-
-                              
-
-                            
-          
                             </div>
                         </div>
                       </div>
@@ -149,70 +150,69 @@
                     </div>
                     <div class="col-md-6">
                       <div class="form-group">
-                        <label class="bmd-label-floating">Your Age</label>
-                        <input type="text" class="form-control" value="{{Auth::user()->age}}" readonly>
+                        <label class="bmd-label-floating">Type of User</label>
+                        <input type="text" class="form-control text-uppercase" value="{{Auth::user()->role}}" readonly>
                       </div>
                     </div>
                   </div>
-                  <div class="row">
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label class="bmd-label-floating">Your Contact Number</label>
-                        <input type="text" class="form-control" value="{{Auth::user()->contact_number}}" readonly>
+                    <div class="row">
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Your Contact Number</label>
+                          <input type="text" class="form-control" value="{{Auth::user()->contact_number}}" readonly>
+                        </div>
                       </div>
-                    </div>
-                    <div class="col-md-6">
-                      <div class="form-group">
-                        <label class="bmd-label-floating">Your Address</label>
-                        <input type="text" class="form-control" value="{{Auth::user()->address}}" readonly>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Your Address</label>
+                          <input type="text" class="form-control" value="{{Auth::user()->address}}" readonly>
+                        </div>
                       </div>
-                    </div>
-                  </div>
-                  <div class="row">
-                    <div class="col-md-12">
+                      <div class="col-md-6">
                           <div class="form-group">
-                            <label class="label-control">Services <span class="text-danger">*</span></label>
-                                  <select name="service_id" id="service_id" class="form-control select2" style="width: 100%">
-                                      <option value="" disabled selected>Services</option>
-                                      @foreach ($services as $service)
-                                            <option value="{{$service->id}}"> {{$service->name}}</option>
-                                      @endforeach
-                                      
-                                  </select>
-                                  <span class="invalid-feedback" role="alert">
-                                      <strong id="error-service_id"></strong>
-                                  </span>
+                          <label class="label-control">Date <span class="text-danger">*</span></label>
+                          
+                          <input type="text" class="form-control date_picker" id="date" name="date"  autocomplete="off">
+
+                          <span class="invalid-feedback" role="alert">
+                                  <strong id="error-date"></strong>
+                              </span>
                           </div>
                       </div>
-                    </div>
-                  
-                    <div id="date_time">
-
-                    </div>
-                    <div class="row">
+                      <div class="col-md-6">
+                          <div class="form-group">
+                          <label class="label-control">Time <span class="text-danger">*</span></label>
+                          <input type="text" class="form-control time_picker" id="time" name="time"  autocomplete="off">
+                          <span class="invalid-feedback" role="alert">
+                              <strong id="error-time"></strong>
+                          </span>
+                          </div>
+                      </div>
                       <div class="col-md-12">
                         <div class="form-group">
-                          <label class="label-control">Note</label>
+                          <label class="label-control">Symtoms <span class="text-danger">*</span></label>
+                          <input type="text" class="form-control" id="symtoms" name="symtoms"  autocomplete="off">
+                          <span class="invalid-feedback" role="alert">
+                              <strong id="error-symtoms"></strong>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="label-control">Be Specify</label>
                           <input type="text" class="form-control" id="note" name="note"  autocomplete="off">
                           <span class="invalid-feedback" role="alert">
                               <strong id="error-note"></strong>
                           </span>
                         </div>
                       </div>
-
-                      
                     </div>
-                  
-
-                  
-
                   <input type="hidden" name="action" id="action" value="Add" />
                   <input type="hidden" name="hidden_id" id="hidden_id" />
-                
             </div>
-            <div class="modal-footer">
+            <div class="modal-footer d-flex justify-content-between">
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
               <input type="submit" name="action_button" id="action_button" class="btn btn-primary" value="Save" />
-              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
             </div>
           </div>
         </div>
@@ -304,11 +304,47 @@
 @section('script')
 <script> 
 
+$(document).ready(function () {
+  var today = new Date();
+  var tomorrow = new Date();
+   tomorrow.setDate(today.getDate() + 1);
+    $('.date_picker').datetimepicker({
+        icons: {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-chevron-up",
+            down: "fa fa-chevron-down",
+            previous: 'fa fa-chevron-left',
+            next: 'fa fa-chevron-right',
+            today: 'fa fa-screenshot',
+            clear: 'fa fa-trash',
+            close: 'fa fa-remove'
+        },
+        format: 'YYYY-MM-DD',
+        locale: 'en',
+        minDate: tomorrow,
 
-var category = null;
+    });
+
+    $('.time_picker').datetimepicker({
+        format: 'LT',
+        stepping: 30,
+        icons: 
+        {
+            time: "fa fa-clock-o",
+            date: "fa fa-calendar",
+            up: "fa fa-chevron-up",
+            down: "fa fa-chevron-down",
+            previous: 'fa fa-chevron-left',
+            next: 'fa fa-chevron-right',
+            today: 'fa fa-screenshot',
+            clear: 'fa fa-trash',
+            close: 'fa fa-remove'
+        },
+    });
+  });
+
   $(document).on('click', '.create_record', function(){
-      category = $(this).attr('category');
-      category_services(category);
       $('#formModal').modal('show');
       $('#myForm')[0].reset();
       $('.form-control').removeClass('is-invalid')
@@ -318,28 +354,6 @@ var category = null;
       $('#lblpurpose').addClass('bmd-label-floating')
   });
 
-  function category_services(category){
-      $.ajax({
-          url: "/patient/appointment/category/services", 
-          type: "get",
-          dataType:"json",
-          data: {
-            category:category,_token: '{!! csrf_token() !!}',
-          },
-          beforeSend: function() {
-          },
-          success: function(data){
-                var services = '';
-                services += '<option value="" disabled selected>Services</option>';
-                $.each(data.services, function(key,value){
-                    services += '<option value="'+value.id+'">'+value.name+'</option>';
-                });
-                $('#service_id').empty().append(services);
-              
-              
-          },
-      });
-  }
 
   $(document).on('click', '#btn_print_modal', function(){
       $('#printModal').modal('show');
@@ -364,49 +378,6 @@ var category = null;
       $('#table_print_appointments').DataTable().buttons(0,0).trigger()
   });
 
-  $(document).on('change', '#service_id', function(){
-    var service = $('#service_id').val();
-    var _token =  $('input[name="_token"]').val();
-
-      $.ajax({
-          url: "/admin/date_time", 
-          type: "get",
-          dataType: "HTMl",
-          data:{service:service,_token:_token},
-          beforeSend: function() {
-            
-          },
-          success: function(response){
-              $("#date_time").html(response);
-              validation_of_date_time()
-          }	
-      })
-  });
-
-  function validation_of_date_time(){
-    var service = $('#service_id').val();
-    var time1 = $('#time').val();
-    var date1 = $('#date').val();
-
-      $.ajax({
-          url: "/patient/appointment/validation_of_date_time/validation", 
-          type: "get",
-          dataType:"json",
-          data: {
-              service:service,time:time1,date:date1,_token: '{!! csrf_token() !!}',
-          },
-          beforeSend: function() {
-          },
-          success: function(data){
-              if(data.onemin){
-                $('#date').addClass('is-invalid')
-                $('#error-date').text(data.onemin)
-              }
-             
-               
-          },
-      });
-  }
 
 
   $('#myForm').on('submit', function(event){
@@ -447,35 +418,6 @@ var category = null;
                         $('#error-'+key).text(value)
                     }
                 })
-            }
-            if(data.onepending){
-              $.confirm({
-                    title: 'Error Message',
-                    content: data.onepending,
-                    type: 'red',
-                    buttons: {
-                            confirm: {
-                                text: 'confirm',
-                                btnClass: 'btn-blue',
-                                keys: ['enter', 'shift'],
-                                action: function(){
-                                }
-                            },
-                            
-                        }
-                    });
-            }
-            if(data.onemin){
-                $('#date').addClass('is-invalid')
-                $('#error-date').text(data.onemin)
-            }
-            if(data.date){
-                  $('#date').addClass('is-invalid')
-                  $('#error-date').text(data.date)
-            }
-            if(data.time){
-                  $('#time').addClass('is-invalid')
-                  $('#error-time').text(data.time)
             }
             if(data.success){
                 $('.form-control').removeClass('is-invalid')

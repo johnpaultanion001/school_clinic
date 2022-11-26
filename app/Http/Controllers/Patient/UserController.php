@@ -20,20 +20,30 @@ class UserController extends Controller
     }
     public function update(Request $request , User $user)
     {
-        date_default_timezone_set('Asia/Manila');
-        if(Auth()->user()->isRegistered == 0){
+        if($request->type_of_user == 'student'){
             $validated =  Validator::make($request->all(), [
                 'name' => ['required', 'string', 'max:255'],
-                'birth_date' => ['required', 'date' , 'before:today'],
-                'contact_number' => ['required', 'string', 'min:8','max:11'],
-                'civil_status' => ['required'],
-                'gender' => ['required'],
+                'contact_number' => ['required', 'min:8','max:11', 'unique:users,contact_number,'.$user->id],
                 'address' => ['required'],
-                'id_picture' =>  ['required' , 'mimes:png,jpg,jpeg,svg,bmp,ico', 'max:2040'],
+                'grade_section'   => ['required'],
+                'lrn'   => ['required'],
+                'student_id'   => ['required'],
             ]);
-        }else{
+        }
+        if($request->type_of_user == 'teacher'){
             $validated =  Validator::make($request->all(), [
-                'id_picture' =>  ['mimes:png,jpg,jpeg,svg,bmp,ico', 'max:2040'],
+                'name' => ['required', 'max:255'],
+                'contact_number' => ['required', 'min:8','max:11','unique:users,contact_number,'.$user->id],
+                'address' => ['required'],
+                'teacher_id'   => ['required'],
+            ]);
+        }
+        if($request->type_of_user == 'non_personnel'){
+            $validated =  Validator::make($request->all(), [
+                'name' => ['required', 'max:255'],
+                'contact_number' => ['required', 'min:8','max:11','unique:users,contact_number,'.$user->id],
+                'address' => ['required'],
+                'non_personnel_id'   => ['required'],
             ]);
         }
         
@@ -41,43 +51,22 @@ class UserController extends Controller
             return response()->json(['errors' => $validated->errors()]);
         }
 
-        if(Auth()->user()->isRegistered == 0){
-            $id = $request->file('id_picture');
-            $extension = $id->getClientOriginalExtension(); 
-            $file_name_to_save = time()."_".auth()->user()->id.".".$extension;
-            $id->move('assets/img/id/', $file_name_to_save);
-        }else{
-            if($request->file('id_picture')){
-                File::delete(public_path('assets/img/id/'.Auth()->user()->id_picture));
-                $id = $request->file('id_picture');
-                $extension = $id->getClientOriginalExtension(); 
-                $file_name_to_save = time()."_".auth()->user()->id.".".$extension;
-                $id->move('assets/img/id/', $file_name_to_save);
-            }else{
-                $file_name_to_save = Auth()->user()->id_picture;
-            }
-           
-        }
-        if(Auth()->user()->isRegistered == 0){
-            $dob = $request->input('birth_date');
-            $age = Carbon::parse($dob)->diff(Carbon::now())->format('%y years old');
-            User::find($user->id)->update([
-                'name' => $request->input('name'),
-                'birth_date' => $request->input('birth_date'),
-                'contact_number' => $request->input('contact_number'),
-                'civil_status' => $request->input('civil_status'),
-                'gender' => $request->input('gender'),
-                'address' => $request->input('address'),
-                'age'      => $age,
-                'id_picture' => $file_name_to_save,
-                'isRegistered' => true,
-            ]);
-        }else{
-            User::find($user->id)->update([
-                'id_picture' => $file_name_to_save,
-                'isRegistered' => true,
-            ]);
-        }
+        User::find($user->id)->update([
+            'name' => $request->input('name'),
+            'contact_number' => $request->input('contact_number'),
+            'address' => $request->input('address'),
+
+            'grade_section' => $request->input('grade_section'),
+            'lrn' => $request->input('lrn'),
+            'student_id' => $request->input('student_id'),
+
+            'teacher_id' => $request->input('teacher_id'),
+
+            'non_personnel_id' => $request->input('non_personnel_id'),
+
+            'role' => $request->input('type_of_user'),
+        ]);
+        
     
 
         return response()->json(['success' => 'Updated Successfully.']);
@@ -85,7 +74,6 @@ class UserController extends Controller
 
     public function changepassword(Request $request , User $user)
     {
-        date_default_timezone_set('Asia/Manila');
         $validated =  Validator::make($request->all(), [
             'current_password' => ['required',new MatchOldPassword],
             'new_password' => ['required'],

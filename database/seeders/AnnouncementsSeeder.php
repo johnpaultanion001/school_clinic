@@ -18,7 +18,7 @@ class AnnouncementsSeeder extends Seeder
             [
                 'id'             => 1,
                 'image'           => 'a1.jpg',
-                'title'           => 'Appointment Time And Services',
+                'title'           => 'Lorem ipsum lorem ipsum lorem ipsum lore',
                 'body' => 'Lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum',
                 'user_id' => '1',
                 'link_website' => 'https://www.facebook.com/rphsangono/',

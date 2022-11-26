@@ -22,7 +22,7 @@ class User extends Authenticatable
 
         'contact_number',
         'address',
-        'grade_student',
+        'grade_section',
         'lrn',
         'student_id',
         'teacher_id',

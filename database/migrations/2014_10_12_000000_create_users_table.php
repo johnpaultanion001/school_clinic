@@ -21,7 +21,7 @@ class CreateUsersTable extends Migration
 
             $table->string('contact_number')->nullable();
             $table->longText('address')->nullable();
-            $table->string('grade_student')->nullable();
+            $table->string('grade_section')->nullable();
             $table->string('lrn')->nullable();
             $table->string('student_id')->nullable();
             $table->string('teacher_id')->nullable();

@@ -13,6 +13,7 @@ Route::get('/migrate-fresh', function() {
     // return what you want
 });
 
+Auth::routes();
 
 Route::group(['prefix' => 'patient', 'as' => 'patient.', 'namespace' => 'Patient', 'middleware' => ['auth']], function () {
    
@@ -20,14 +21,10 @@ Route::group(['prefix' => 'patient', 'as' => 'patient.', 'namespace' => 'Patient
     Route::get('update', 'UserController@updateshow')->name('updateshow');
     Route::post('update/{user}', 'UserController@update')->name('update');
     Route::put('changepassword/{user}', 'UserController@changepassword')->name('changepassword');
-
+ 
     //Notification
     Route::put('notification/{notif}', 'NotificationController@notification')->name('notification');
 
-});
-
-Route::group(['prefix' => 'patient', 'as' => 'patient.', 'namespace' => 'Patient', 'middleware' => ['auth']], function () {
-   
     // 
     Route::resource('appointment', 'AppointmentController');
     // Home
