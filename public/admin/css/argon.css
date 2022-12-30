@@ -26283,10 +26283,7 @@ table.dataTable tbody > tr.selected
     font-weight: 400;
 }
 
-.fc-header-toolbar
-{
-    display: none;
-}
+
 
 .fc-scroller
 {

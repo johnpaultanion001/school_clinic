@@ -20,7 +20,7 @@ class AppointmentController extends Controller
         if($userrole == 'admin'){
             date_default_timezone_set('Asia/Manila');
 
-            $appointments = Appointment::latest()->where('isMove', '0')->get();
+            $appointments = Appointment::latest()->get();
             return view('admin.appointments', compact('appointments'));
         }
         return abort('403');
@@ -51,7 +51,6 @@ class AppointmentController extends Controller
         date_default_timezone_set('Asia/Manila');
         $validated =  Validator::make($request->all(), [
             'status' => ['required'],
-            'doctor' => ['required'],
             'comment' => ['required'],
         ]);
         if ($validated->fails()) {
@@ -60,13 +59,12 @@ class AppointmentController extends Controller
     
         Appointment::find($appointment->id)->update([
             'status' => $request->input('status'),
-            'doctor_id' => $request->input('doctor'),
             'comment' => $request->input('comment'),
         ]);
 
         $emailNotif = [
             'notif_message'     => '',
-            'service'           =>  $appointment->service->name,
+            'symptoms'           =>  $appointment->symptoms,
             'ref_number'        =>  $appointment->ref_number,
             'date_and_time'     =>  Carbon::parse($appointment->date)->isoFormat('MMM Do YYYY') .'at'. $appointment->time,
             'name'              =>  $appointment->user->name,
@@ -114,26 +112,12 @@ class AppointmentController extends Controller
         }
         
 
-        Notification::create([
-            'user_id' => $appointment->user_id,
-            'status' => "Your Appointment has been " . $message,
-            'link' => "/patient/appointment",
-        ]);
-
-        ActivityLog::create([
-            'activity'  => 'Activity: Change Status to '.$message.' <br>
-                            Appointment ID: '.$appointment->id .'<br>
-                            User: '. auth()->user()->name,
-        ]);
-
         return response()->json(['success' => 'Updated Successfully.']);
     }
 
     public function destroy(Appointment $appointment)
     {
-        Appointment::find($appointment->id)->update([
-            'isMove'        => 1,
-        ]);
+        $appointment->delete();
         return response()->json(['success' => 'Removed Successfully.']);
     }
 }

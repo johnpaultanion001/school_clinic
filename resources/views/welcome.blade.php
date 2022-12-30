@@ -25,27 +25,7 @@
         <div class="title">
             <h3  class="title text-white text-uppercase text-center">FEEDBACKS</h3>
         </div>
-        @foreach($announcements as $announcement)
-          <article class="view postcard light blue" view="{{  $announcement->id ?? '' }}">
-              
-             
-
-              <div class="postcard__text t-dark">
-                <h1 class="postcard__title blue">{{$announcement->title}}</h1>
-                <div class="postcard__subtitle small">
-                  <time datetime="2020-05-25 12:00:00">
-                    <i class="fas fa-calendar-alt mr-2"></i> {{ $announcement->created_at->format('F d,Y h:i A') }} <i class="fas fa-user ml-2 mr-2"></i>{{  $announcement->user->name ?? '' }}
-                  </time>
-                </div>
-                <div class="postcard__bar"></div>
-                <div class="postcard__preview-txt">  {{\Illuminate\Support\Str::limit($announcement->body,150)}}
-                </div>
-                <ul class="postcard__tagbox">
-                  <button type="button" name="view" id="view" view="{{  $announcement->id ?? '' }}" class="view tag__item"><i class="fas fa-eye fa-lg p-2"></i>View NEWS</button>
-                </ul>
-            </div>
-          </article>
-        @endforeach
+     
       </div>
     </div>
     <div class="section section-contacts" id="contact">

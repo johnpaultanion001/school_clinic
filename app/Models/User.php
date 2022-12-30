@@ -54,9 +54,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
-    public function doctor()
+    public function appointments()
     {
-        return $this->belongsTo(Doctor::class, 'id', 'user_id');
+        return $this->hasMany(Appointment::class, 'user_id');
     }
    
 }

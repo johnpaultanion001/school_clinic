@@ -4,8 +4,6 @@ namespace App\Http\Controllers\Patient;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
-use App\Models\Announcements;
-
 class HomeController extends Controller
 {
     /**
@@ -25,8 +23,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $announcements = Announcements::where('isRemove', 0)->latest()->get();
-        return view('patient.home', compact('announcements'));
+        return view('patient.home');
     }
        
    

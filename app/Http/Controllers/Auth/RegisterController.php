@@ -51,7 +51,7 @@ class RegisterController extends Controller
                 'password' => ['required', 'min:8', 'confirmed'],
                 'terms_and_conditions' => 'accepted',
                 
-                'grade_section'   => ['required'],
+                'grade_student'   => ['required'],
                 'lrn'   => ['required'],
                 'student_id'   => ['required'],
             ]);
@@ -92,7 +92,7 @@ class RegisterController extends Controller
             'address' => $data['address'],
             'password' => Hash::make($data['password']),
 
-            'grade_section' => $data['grade_section'],
+            'grade_student' => $data['grade_student'],
             'lrn' => $data['lrn'],
             'student_id' => $data['student_id'],
 

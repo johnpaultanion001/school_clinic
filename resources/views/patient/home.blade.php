@@ -79,27 +79,7 @@
         <div class="title">
             <h3  class="title text-white text-uppercase text-center">Hospital News</h3>
         </div>
-        @foreach($announcements as $announcement)
-          <article class="view postcard light blue" view="{{  $announcement->id ?? '' }}">
-              
-              <img class="postcard__img"src="{{URL::asset('/assets/img/announcements/'.$announcement->image)}}" alt="Image Title" />
-
-              <div class="postcard__text t-dark">
-                <h1 class="postcard__title blue">{{$announcement->title}}</h1>
-                <div class="postcard__subtitle small">
-                  <time datetime="2020-05-25 12:00:00">
-                    <i class="fas fa-calendar-alt mr-2"></i> {{ $announcement->created_at->format('F d,Y h:i A') }} <i class="fas fa-user ml-2 mr-2"></i>{{  $announcement->user->name ?? '' }}
-                  </time>
-                </div>
-                <div class="postcard__bar"></div>
-                <div class="postcard__preview-txt">  {{\Illuminate\Support\Str::limit($announcement->body,150)}}
-                </div>
-                <ul class="postcard__tagbox">
-                  <button type="button" name="view" id="view" view="{{  $announcement->id ?? '' }}" class="view tag__item"><i class="fas fa-eye fa-lg p-2"></i>View NEWS</button>
-                </ul>
-            </div>
-          </article>
-        @endforeach
+        
       </div>
     </div>
 
@@ -154,33 +134,6 @@
        
   </div>
  
-
-  <div class="modal fade" id="viewModal" tabindex="-1" role="dialog" style="display: none;" aria-hidden="true">
-    <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h5 class="modal-title">Modal title</h5>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <i class="material-icons">clear</i>
-          </button>
-        </div>
-        <div class="modal-body">
-        <img id="image_ann" style="vertical-align: bottom;"  height="350" width="100%"  data-target="#carouselExample" data-slide-to="0">
-        <h4 id="title" class="font-weight-bold"></h4>
-        <h5 id="body" class="text-justify"></h5>
-          
-          <div class="link_website">
-            <h4>Click <a id="link_websites" href="/" target="_blank">Here</a>. To More Info.</h4>
-          </div>
-           
-        </div>
-        <div class="modal-footer">
-          
-          <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">Close</button>
-        </div>
-      </div>
-    </div>
-  </div>
 @endsection
 
 
@@ -224,39 +177,6 @@
       }
     }
 
-    $(document).on('click', '.view', function(){
-      $('#viewModal').modal('show');
-      $('.link_website').hide();
-      var id = $(this).attr('view');
-      
-      $.ajax({
-        url :"/view/"+id,
-        dataType:"json",
-        beforeSend:function(){
-           $(".modal-title").text('Loading...');
-        },
-        success:function(data){
-            $(".modal-title").text('View News');
-            $.each(data.result, function(key,value){
-                if(key == $('#'+key).attr('id')){
-                    $('#'+key).text(value)
-                }
-                if(key == 'link_website'){
-                  if(value == null){
-                    $('.link_website').hide();
-                  }else{
-                    $('.link_website').show();
-                    $('#link_websites').prop('href' , value);
-                  }
-                }
-                if(key == 'image'){
-                  $('#image_ann').prop("src", '/assets/img/announcements/'+ value);
-                }
-            })
-        }
-    })
-
-    });
   
 
 </script>

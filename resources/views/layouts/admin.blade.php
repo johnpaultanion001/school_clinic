@@ -117,44 +117,7 @@
                     @yield('footer')
 
                     
-                @if (Auth::user())
-                    @php(
-                        [
-                        $notis = App\Models\Notification::where('user_id', Auth::user()->id ?? ''  )->where('isRead', 0)->count(),
-                        $allnotis =  App\Models\Notification::where('user_id', Auth::user()->id ?? ''  )->orderBy('isRead', 'asc')->latest()->get()
-                        ]
-                    )
-
-                    <div id="notification_bell" class="btn btn btn-round" style="border-radius: 25px;">
-                        <i class="fas fa-bell fa-2x" style="color: #8E0E00;"></i>
-                        <span class="counter counter-lg ">
-                            
-
-                            @if($notis > 0)
-                                <i class="fas fa-circle text-warning"></i>
-                            @else
-
-                            @endif
-                        </span> 
-                    </div>
-
-                    <div class="card dropdown_list" style="max-width: 400px; max-height: 200px; overflow-x: scroll; overflow-y: scroll;">
-
-                        <ul class="list-group list-group-flush">
-                                @if(count($allnotis) > 0)
-                                    @foreach($allnotis as $an)
-                                    <li id="click_notif" click_notif="{{$an->id}}" class="list-group-item">
-                                        <i class="fas fa-bell {{ $an->isRead == 0 ? 'text-success' : '' }}"></i> <br>
-                                        {{$an->status}}
-                                    </li>  
-                                    @endforeach
-                                @else
-                                    <li class="list-group-item">No Notification</li>
-                                @endif
-                            </ul>
-                    
-                    </div>
-                @endif
+        
             </div>
 
             <form id="logoutform" action="{{ route('logout') }}" method="POST" style="display: none;">

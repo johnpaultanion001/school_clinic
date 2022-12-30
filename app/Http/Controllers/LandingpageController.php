@@ -9,14 +9,9 @@ class LandingpageController extends Controller
 {
     public function index()
     {
-        $announcements = Announcements::where('isRemove', 0)->latest()->get();
-        return view('welcome', compact('announcements'));
+      
+        return view('welcome');
     }
 
-    public function view(Announcements $announcement)
-    {
-        if (request()->ajax()) {
-            return response()->json(['result' =>  $announcement]);
-        }
-    }
+   
 }

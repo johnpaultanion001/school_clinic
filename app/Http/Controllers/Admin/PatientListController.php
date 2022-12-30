@@ -14,7 +14,7 @@ class PatientListController extends Controller
        
         $userrole = auth()->user()->role;
         if($userrole == 'admin'){
-            $patients = User::where('role', 'patient')->latest()->get();
+            $patients = User::whereIn('role', ['student','teacher','non_personnel'])->latest()->get();
             return view('admin.patientlist', compact('patients'));
         }
         return abort('403');

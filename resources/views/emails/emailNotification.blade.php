@@ -26,7 +26,7 @@
     <br>
     <br>
     <hr>
-        <strong style="font-size: 15px;">Service:  {{ $content['service'] }}</strong>
+        <strong style="font-size: 15px;">Symptoms:  {{ $content['symptoms'] }}</strong>
     <hr>
         <strong style="font-size: 15px;">Date/Time:  {{ $content['date_and_time'] }}</strong>
     <hr>

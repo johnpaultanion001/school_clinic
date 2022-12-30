@@ -32,7 +32,7 @@
                   <option value="PENDING">PENDING</option>
                   <option value="APPROVED">APPROVED</option>
                   <option value="DECLINED">DECLINED</option>
-                  <option value="FAILED">FAILED</option>
+                  <option value="CANCELLED">CANCELLED</option>
                   <option value="FOLLOW-UP">FOLLOW-UP</option>
                   <option value="COMPLETED">COMPLETED</option>
               </select>
@@ -48,21 +48,18 @@
                
                 <th scope="col">Actions</th>
                 <th scope="col">Appointment ID</th>
+                <th scope="col">Role</th>
                 <th scope="col">Full Name</th>
                 <th scope="col">Email</th>
                 <th scope="col">Contact Number</th>
                 <th scope="col">Address</th>
                 <th scope="col">Ref Number</th>
-
-                <th scope="col">Service</th>
-                <th scope="col">Doctor</th>
-                <th scope="col">Appointment Date</th>
-                <th scope="col">Appointment Time</th>
+                <th scope="col">Appointment Date & Time</th>
                 <th scope="col">Status</th>
                 <th scope="col">Admin Comment</th>
 
                 <th scope="col">Created At</th>
-                <th scope="col">Date COMPLETED
+                <th scope="col">Date COMPLETED</th>
             </thead>
             <tbody class="text-uppercase font-weight-bold">
               @foreach($appointments as $appointments)
@@ -74,6 +71,10 @@
                       </td>
                       <td>
                           {{  $appointments->id ?? '' }}
+                      </td>
+                      <td>
+                                <h1 class="btn-sm btn btn-success text-uppercase"> {{  $appointments->user->role ?? '' }}</h1><br>
+                          
                       </td>
                       <td>
                           {{  $appointments->user->name ?? '' }}
@@ -91,20 +92,9 @@
                       <td>
                             {{  $appointments->ref_number ?? '' }}
                       </td>
-                      
                       <td>
-                            {{  $appointments->service->name ?? '' }}
+                            {{  $appointments->date ?? '' }} at {{  $appointments->time ?? '' }}
                       </td>
-                      <td>
-                           {{  $appointments->doctor->name ?? '' }}
-                      </td>
-                      <td>
-                            {{  $appointments->date ?? '' }}
-                      </td>
-                      <td>
-                            {{  $appointments->time ?? '' }}
-                      </td>
-
                       <td>
                             @if($appointments->status == 'PENDING')
                                 <h1 class="btn-sm btn btn-warning text-uppercase">Pending</h1><br>
@@ -116,8 +106,8 @@
                                 <h1 class="btn-sm btn btn-primary text-uppercase">Follow-Up</h1>
                             @elseif ($appointments->status == 'COMPLETED')
                                 <h1 class="btn-sm btn btn-success text-uppercase">Completed</h1>
-                            @elseif ($appointments->status == 'FAILED')
-                                <h1 class="btn-sm btn btn-danger text-uppercase">Failed</h1>
+                            @elseif ($appointments->status == 'CANCELLED')
+                                <h1 class="btn-sm btn btn-danger text-uppercase">Cancelled</h1>
                             @endif
                       </td>
                       <td>
@@ -160,22 +150,12 @@
                           <option value="PENDING">PENDING</option>
                           <option value="APPROVED">APPROVED</option>
                           <option value="DECLINED">DECLINED</option>
-                          <option value="FAILED">FAILED</option>
                           <option value="FOLLOW-UP">FOLLOW-UP</option>
                           <option value="COMPLETED">COMPLETED</option>
+                          
                   </select>
                 </div>
-                <div class="form-group">
-                  <label for="doctor" class="bmd-label-floating">Doctor</label>
-                  <p class="text-warning" id="current_selected_doctor"></p>
-                  <select name="doctor" id="doctor" class="form-control select2">
-                          <option value="" disabled selected>Select Doctor</option>
-                  </select>
-
-                  <span class="invalid-feedback" role="alert">
-                      <strong id="error-doctor"></strong>
-                  </span>
-                </div>
+              
                 <div class="form-group">
                   <label for="comment" id="lblpurpose" class="bmd-label-floating">Comment:</label>
                   <textarea class="form-control comment" rows="4" name="comment" id="comment"></textarea>
@@ -223,76 +203,10 @@
     });
 
     $('#status_dd').on('change', function () {
-      table.columns(11).search( this.value ).draw();
+      table.columns(9).search( this.value ).draw();
     });
 
   });
-
-//   $(document).on('click', '#move', function () {
-//         var table = $('#datatable-apps').DataTable();
-//         var ids = $.map(table.rows({ selected: true }).nodes(), function (entry) {
-//             return $(entry).data('entry-id')
-//         });
-//         var _token =  $('input[name="_token"]').val();
-
-
-//         if (ids.length === 0) {
-//           alert('NO ROW SELECTED')
-//         }else{
-//           $.confirm({
-//                 title: 'Confirmation',
-//                 content: 'You want to move this data to Historical data?',
-//                 type: 'green',
-//                 buttons: {
-//                 confirm: {
-//                 text: 'confirm',
-//                 btnClass: 'btn-blue',
-//                 keys: ['enter', 'shift'],
-//                 action: function(){
-//                     return $.ajax({
-//                         url:"/admin/historical/move",
-//                         method:'GET',
-//                         data: {
-//                           ids:ids,_token:_token,
-//                         },
-//                         dataType:"json",
-//                         beforeSend:function(){
-                        
-//                         },
-//                         success:function(data){
-//                             if(data.success){
-//                             $.confirm({
-//                                 title: 'Confirmation',
-//                                 content: data.success,
-//                                 type: 'green',
-//                                 buttons: {
-//                                         confirm: {
-//                                             text: 'confirm',
-//                                             btnClass: 'btn-blue',
-//                                             keys: ['enter', 'shift'],
-//                                             action: function(){
-//                                                 location.reload();
-//                                             }
-//                                         },
-                                        
-//                                     }
-//                                 });
-//                             }
-//                         }
-//                     })
-//                 }
-//                 },
-//                 cancel:  {
-//                 text: 'cancel',
-//                 btnClass: 'btn-red',
-//                 keys: ['enter', 'shift'],
-//                 }
-//                 }
-//                 });
-//         }
-     
-// });
-
 
   $(document).on('click', '.change', function(){
       $('#formModal').modal('show');

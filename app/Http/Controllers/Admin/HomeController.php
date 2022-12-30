@@ -28,19 +28,17 @@ class HomeController extends Controller
     {
         $userrole = auth()->user()->role;
         if($userrole == 'admin'){
-            $pending = Appointment::where('status', 'PENDING')->where('isMove', '0')->count();
-            $approved = Appointment::where('status', 'APPROVED')->where('isMove', '0')->count();
-            $declined = Appointment::where('status', 'DECLINED')->where('isMove', '0')->count();
-            $follow = Appointment::where('status', 'FOLLOW-UP')->where('isMove', '0')->count();
-            $completed = Appointment::where('status', 'COMPLETED')->where('isMove', '0')->count();
-            $failed = Appointment::where('status', 'FAILED')->where('isMove', '0')->count();
+            $pending = Appointment::where('status', 'PENDING')->count();
+            $approved = Appointment::where('status', 'APPROVED')->count();
+            $declined = Appointment::where('status', 'DECLINED')->count();
+            $follow = Appointment::where('status', 'FOLLOW-UP')->count();
+            $completed = Appointment::where('status', 'COMPLETED')->count();
+            $failed = Appointment::where('status', 'FAILED')->count();
 
             $patients = User::where('role', 'patient')->count();
-            $doctors = User::where('role', 'doctor')->count();
-            
 
-            $appointment_for_now = Appointment::whereDay('date', '=', date('d'))->where('isMove', '0')->latest()->get();
-            return view('admin.home', compact('pending','approved', 'declined','completed','follow','patients','appointment_for_now','doctors' ,'failed'));
+            $appointment_for_now = Appointment::whereDay('date', '=', date('d'))->latest()->get();
+            return view('admin.home', compact('pending','approved', 'declined','completed','follow','patients','appointment_for_now','failed'));
         }
         return abort('403');
     }

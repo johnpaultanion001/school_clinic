@@ -34,26 +34,31 @@
                       <div class="col-md-6">
                         <div class="form-group">
                             <label class="bmd-label-floating">Email</label>
-                            <input type="email" name="email" id="email" class="form-control" value="{{Auth::user()->email}}" readonly>
+                            <input type="email" name="email" id="email" class="form-control" value="{{Auth::user()->email ?? ''}}" readonly>
                           </div>
                         </div>
                         <div class="col-md-6">
                      <div class="form-group">
-                         <label class="bmd-label-floating">ID PICTURE <span class="text-danger">*</span></label>
-                        <input type="file" name="id_picture" id="id_picture" class="form-control id_picture" accept="image/*"/>
-                        <a href="/assets/img/id/{{Auth::user()->id_picture}}" target="_blank">{{Auth::user()->id_picture ?? ''}}</a>
-                        <span class="invalid-feedback" role="alert">
-                            <strong id="error-id_picture"></strong>
-                        </span>
+                         <button type="button" class="btn-success btn-sm btn mt-2" id="view_qr">View your qr code</button>
                       </div>
                     </div>
                     </div>
 
                     <div class="row">
+                     <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">ID <span class="text-danger">*</span></label>
+                          <input type="text" class="form-control" name="name" id="name" value="{{Auth::user()->student_id ?? Auth::user()->teacher_id ?? Auth::user()->non_personnel_id}}" >
+                          <span class="invalid-feedback" role="alert">
+                              <strong id="error-name"></strong>
+                          </span>
+                        </div>
+                      </div>
+
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Name <span class="text-danger">*</span></label>
-                          <input type="text" class="form-control" name="name" id="name" value="{{Auth::user()->name}}" readonly>
+                          <input type="text" class="form-control" name="name" id="name" value="{{Auth::user()->name ?? ''}}" >
                           <span class="invalid-feedback" role="alert">
                               <strong id="error-name"></strong>
                           </span>
@@ -63,7 +68,7 @@
                       <div class="col-md-6">
                         <div class="form-group">
                           <label class="bmd-label-floating">Contact Number <span class="text-danger">*</span></label>
-                          <input type="number" class="form-control" name="contact_number" id="contact_number" value="{{Auth::user()->contact_number}}" readonly>
+                          <input type="number" class="form-control" name="contact_number" id="contact_number" value="{{Auth::user()->contact_number ?? ''}}" >
                           <span class="invalid-feedback" role="alert">
                               <strong id="error-contact_number"></strong>
                           </span>
@@ -72,62 +77,34 @@
 
                       <div class="col-md-6">
                         <div class="form-group">
-                            <label class="bmd-label-floating">Gender <span class="text-danger">*</span></label>
-                                @if(Auth()->user()->isRegistered == '0')
-                                    <select name="gender" id="gender" class="form-control select2" style="width: 100%" >
-                                      <option value="" disabled selected>Gender</option>
-                                      <option value="MALE" {{Auth::user()->gender == 'MALE' ? 'selected' : '' }}>MALE</option>
-                                      <option value="FEMALE" {{Auth::user()->gender == 'FEMALE' ? 'selected' : '' }}>FEMALE</option>
-                                    </select>
-                                @else
-                                  <input type="text" class="form-control" value="{{Auth::user()->gender}}" readonly>
-                                @endif
-                                <span class="invalid-feedback" role="alert">
-                                    <strong id="error-gender"></strong>
-                                </span>
-                        </div>
-                      </div>
-
-                      <div class="col-md-6">
-                        <div class="form-group">
-                            <label class="bmd-label-floating">Civil Status <span class="text-danger">*</span></label>
-                                @if(Auth()->user()->isRegistered == '0')
-                                  <select name="civil_status" id="civil_status" class="form-control select2" style="width: 100%">
-                                      <option value="" disabled selected>Civil Status</option>
-                                      <option value="SINGLE" {{Auth::user()->civil_status == 'SINGLE' ? 'selected' : ''}}>SINGLE</option>
-                                      <option value="MARRIED" {{Auth::user()->civil_status == 'MARRIED' ? 'selected' : ''}}>MARRIED</option>
-                                      <option value="WIDOWED" {{Auth::user()->civil_status == 'WIDOWED' ? 'selected' : ''}}>WIDOWED</option>
-                                  </select>
-                                @else
-                                  <input type="text" class="form-control" value="{{Auth::user()->civil_status}}" readonly>
-                                @endif
-                                <span class="invalid-feedback" role="alert">
-                                    <strong id="error-civil_status"></strong>
-                                </span>
-                        </div>
-                      </div>
-
-                      <div class="col-md-6">
-                        <div class="form-group">
-                          <label class="bmd-label-floating">Address <span class="text-danger">*</span></label>
-                          <input type="text" class="form-control" name="address" id="address" value="{{Auth::user()->address}}" {{Auth()->user()->isRegistered == '1' ? 'readonly':''}}>
+                          <label class="bmd-label-floating">Home Address <span class="text-danger">*</span></label>
+                          <input type="text" class="form-control" name="address" id="address" value="{{Auth::user()->address ?? ''}}">
                           <span class="invalid-feedback" role="alert">
                               <strong id="error-address"></strong>
                           </span>
                         </div>
                       </div>
-
-                    <div class="col-md-6">
-                      <div class="form-group">
-                          <label >Date Of Birth <span class="text-danger">*</span></label>
-
-                          <input type="date" id="birth_date" name="birth_date" class="form-control" min="01-jan-2022"  value="{{Auth::user()->birth_date}}" {{Auth()->user()->isRegistered == '1' ? 'readonly':''}}>
+                      @if(Auth()->user()->role == 'student')
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">Grade And Section <span class="text-danger">*</span></label>
+                          <input type="text" class="form-control" name="grade_student" id="grade_student" value="{{Auth::user()->grade_student ?? ''}}">
                           <span class="invalid-feedback" role="alert">
-                              <strong id="error-birth_date"></strong>
+                              <strong id="error-grade_student"></strong>
                           </span>
+                        </div>
                       </div>
-                    </div>
-                   
+
+                      <div class="col-md-6">
+                        <div class="form-group">
+                          <label class="bmd-label-floating">LRN <span class="text-danger">*</span></label>
+                          <input type="text" class="form-control" name="lrn" id="lrn" value="{{Auth::user()->lrn ?? ''}}">
+                          <span class="invalid-feedback" role="alert">
+                              <strong id="error-lrn"></strong>
+                          </span>
+                        </div>
+                      </div>
+                      @endif
 
                     
 
@@ -219,6 +196,29 @@
     </div>
   </form>
 
+  <div class="modal fade" id="qrModal" tabindex="-1" role="dialog">
+      <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="cp-modal-title">QR CODE</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <i class="material-icons">clear</i>
+            </button>
+          </div>
+          <div class="modal-body">
+        
+              <div class="col-sm-12 mx-auto text-center">
+                  {!! QrCode::size(300)->generate(auth()->user()->id); !!}
+              </div>
+              
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-danger btn-link" data-dismiss="modal">Close</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
 
 @endsection
 
@@ -231,6 +231,11 @@
 
 @section('script')
 <script> 
+
+$(document).on('click', '#view_qr', function(){
+    $('#qrModal').modal('show');
+});
+
 
 $(document).on('click', '#changepassword', function(){
     $('#cpModal').modal('show');

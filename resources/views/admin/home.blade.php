@@ -102,24 +102,6 @@
                             </div>
                         </div>
                 </div>
-                <div class="card text-center" style="background-color: #667db6;">
-                    
-                        <div class="card-block">
-                            <h4 class="card-title text-white">DOCTORS</h4>
-                            <h2><i class="fas fa-users fa-3x text-white"></i></h2>
-                        </div>
-                        
-                        <div class="row m-2">
-                            <div class="col-12">
-                                <a href="/admin/doctors">
-                                    <div class="card card-block text-info  border-left-0 border-top-o border-bottom-0 bg-white btn" style="border: 1px solid #111;">
-                                        <h3 style="color: #111;">{{$doctors}}</h3>
-                                        <span class="small text-uppercase font-weight-bold" style="color: #111;">DOCTORS TOTAL</span>
-                                    </div>
-                                </a>
-                            </div>
-                        </div>
-                </div>
             </div>
             
             <div class="col-12">
@@ -138,15 +120,15 @@
                                 <tr>
                                     <th scope="col">Patient ID</th>
                                     <th scope="col">Full Name</th>
-                                    <th scope="col">Service</th>
+                                    <th scope="col">Symptoms</th>
                                 </tr>
                             </thead>
                             <tbody class="text-uppercase font-weight-bold">
                                 @foreach($appointment_for_now as $apps)
                                 <tr>
                                     <td>{{$apps->id}}</td>
-                                    <td>{{$apps->user->name}}</td>
-                                    <td>{{$apps->service->name}}</td>
+                                    <td>{{$apps->user->name ?? ''}}</td>
+                                    <td>{{$apps->symptoms ?? ''}}</td>
                                 </tr>
                                 @endforeach
                             </tbody>

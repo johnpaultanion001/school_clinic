@@ -34,58 +34,18 @@
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link {{ request()->is('admin/services') || request()->is('admin/services/*') ? 'active' : '' }}" href="{{ route("admin.services.index") }}">
+                <a class="nav-link {{ request()->is('admin/calendar') || request()->is('admin/calendar/*') ? 'active' : '' }}" href="{{ route("admin.calendar.index") }}">
                   <i class="far fa-list-alt fa-lg "></i>
-                  <span class="nav-link-text text-uppercase">Manage Services</span>
-                </a>
-              </li>
-              
-              <li class="nav-item">
-                <a class="nav-link {{ request()->is('admin/announcements') || request()->is('admin/announcements/*') ? 'active' : '' }}" href="{{ route("admin.announcements.index") }}">
-                  <i class="far fa-list-alt fa-lg "></i>
-                  <span class="nav-link-text text-uppercase">Manage Announcements</span>
-                </a>
-              </li>
-
-              <li class="nav-item">
-                <a class="nav-link {{ request()->is('admin/doctors') || request()->is('admin/doctors/*') ? 'active' : '' }}" href="{{ route("admin.doctors.index") }}">
-                  <i class="far fa-list-alt fa-lg "></i>
-                  <span class="nav-link-text text-uppercase">Manage Doctors Account</span>
+                  <span class="nav-link-text text-uppercase">Calendar</span>
                 </a>
               </li>
               <li class="nav-item">
-                <a class="nav-link {{  request()->is('admin/historical/filter/*') ? 'active' : '' }}" href="/admin/historical/filter/all">
+                <a class="nav-link {{ request()->is('admin/qr') || request()->is('admin/qr/*') ? 'active' : '' }}" href="{{ route("admin.qr.index") }}">
                   <i class="far fa-list-alt fa-lg "></i>
-                  <span class="nav-link-text text-uppercase">Historical Data</span>
+                  <span class="nav-link-text text-uppercase">QR HISTORY</span>
                 </a>
               </li>
-              <li class="nav-item">
-                <a class="nav-link {{ request()->is('admin/activity_log') || request()->is('admin/activity_log/*') ? 'active' : '' }}" href="{{ route("admin.activity_log") }}">
-                  <i class="far fa-list-alt fa-lg "></i>
-                  <span class="nav-link-text text-uppercase">Activity Log</span>
-                </a>
-              </li>
-              
               @endif
-              @if(Auth()->user()->role == 'doctor')
-                <li class="nav-item">
-                  <a class="nav-link {{ request()->is('admin/doctor/account') || request()->is('admin/doctor/account/*') ? 'active' : '' }}" href="{{ route("admin.doctor.account") }}">
-                    <i class="far fa-user fa-lg "></i>
-                    <span class="nav-link-text text-uppercase">Manage Account</span>
-                  </a>
-                </li>
-                <li class="nav-item">
-                  <a class="nav-link {{ request()->is('admin/doctor/appointments') || request()->is('admin/doctor/appointments/*') ? 'active' : '' }}" href="{{ route("admin.doctor.appointment") }}">
-                    <i class="far fa-list-alt fa-lg "></i>
-                    <span class="nav-link-text text-uppercase">Manage Appointment</span>
-                  </a>
-                </li>
-              @endif
-              
-
-           
-
-              
           </ul>
 
 

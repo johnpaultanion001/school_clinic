@@ -75,9 +75,9 @@
                   </div>
                   <div class="col-md-10 mx-auto grade_section">
                     <div class="form-group">
-                      <label for="grade_section" class="bmd-label-floating">Grade/Section <span class="text-danger">*</span></label>
-                      <input type="text" id="grade_section" name="grade_section" class="form-control @error('grade_section') is-invalid @enderror"  value="{{ old('grade_section') }}" autocomplete="grade_section">
-                      @error('grade_section')
+                      <label for="grade_student" class="bmd-label-floating">Grade/Section <span class="text-danger">*</span></label>
+                      <input type="text" id="grade_student" name="grade_student" class="form-control @error('grade_student') is-invalid @enderror"  value="{{ old('grade_student') }}" autocomplete="grade_student">
+                      @error('grade_student')
                           <span class="invalid-feedback" role="alert">
                               <strong>{{ $message }}</strong>
                           </span>
