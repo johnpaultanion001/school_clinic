@@ -112,13 +112,17 @@
     'columnDefs': [{ 'orderable': false, 'targets': 0 }],
   });
 
-  $('.datatable-brgy:not(.ajaxTable)').DataTable({ buttons: dtButtons })
+  var table = $('.datatable-brgy:not(.ajaxTable)').DataTable({ buttons: dtButtons })
     $('a[data-toggle="tab"]').on('shown.bs.tab', function(e){
         $($.fn.dataTable.tables(true)).DataTable()
             .columns.adjust();
     });
-  });
+  
 
+  $('#status_dd').on('change', function () {
+      table.columns(1).search( this.value ).draw();
+    });
+  });
 
 
 </script>

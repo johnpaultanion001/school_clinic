@@ -89,6 +89,20 @@
     input[type="search"] {
         border: solid 1px black;
     }
+    .star {
+    visibility:hidden;
+    font-size:30px;
+    cursor:pointer;
+    }
+    .star:after {
+      content: "\2605";
+      position: absolute;
+      visibility:visible;
+    }
+    .star:checked:after {
+      content: "\2606";
+      position: absolute;
+    }
   </style>
 </head>
 

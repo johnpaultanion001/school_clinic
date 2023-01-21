@@ -53,12 +53,11 @@ class LoginController extends Controller
         $fieldType = filter_var($request->username, FILTER_VALIDATE_EMAIL) ? 'email' : 'contact_number';
         if(auth()->attempt(array($fieldType => $input['username'], 'password' => $input['password'])))
         {
-            if(Auth::user()->role == 'patient'){
-                return redirect()->route('patient.home');  
-            }else if(Auth::user()->role == 'admin'){
+            if(Auth::user()->role == 'admin'){
                 return redirect()->route('admin.home');  
-            }else if(Auth::user()->role == 'doctor'){
-                return redirect()->route('admin.doctor.appointment');  
+            }else{
+                 return redirect()->route('landingpage');  
+                 
             }
         }else{
             return redirect()->route('login')

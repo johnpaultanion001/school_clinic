@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Appointment;
 use App\Models\User;
+use App\Models\Feedback;
 
 class HomeController extends Controller
 {
@@ -35,10 +36,11 @@ class HomeController extends Controller
             $completed = Appointment::where('status', 'COMPLETED')->count();
             $failed = Appointment::where('status', 'FAILED')->count();
 
-            $patients = User::where('role', 'patient')->count();
+            $patients = User::whereIn('role', ['student','teacher','non_personnel'])->count();
 
             $appointment_for_now = Appointment::whereDay('date', '=', date('d'))->latest()->get();
-            return view('admin.home', compact('pending','approved', 'declined','completed','follow','patients','appointment_for_now','failed'));
+            $feedbacks = Feedback::latest()->get();
+            return view('admin.home', compact('pending','approved', 'declined','completed','follow','patients','appointment_for_now','failed','feedbacks'));
         }
         return abort('403');
     }

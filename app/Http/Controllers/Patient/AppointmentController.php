@@ -4,9 +4,6 @@ namespace App\Http\Controllers\Patient;
 
 use App\Http\Controllers\Controller;
 use App\Models\Appointment;
-use App\Models\Notification;
-use App\Models\Service;
-use App\Models\Doctor;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Validator;

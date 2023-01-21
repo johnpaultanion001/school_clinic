@@ -26,7 +26,7 @@
     <div class="col-xl-12">
       <div class="row">
            <div class="col-6">
-                <div class="card text-center" style="background-color: #667db6;">
+                <div class="card text-center" style="background-color:  #f3bd04;">
                     <div class="card-block">
                         <h4 class="card-title text-white">APPOINTMENTS</h4>
                         <h2><i class="fa fa-calendar fa-3x text-white"></i></h2>
@@ -84,7 +84,7 @@
                 </div>
             </div>
             <div class="col-6">
-                <div class="card text-center" style="background-color: #667db6;">
+                <div class="card text-center" style="background-color:  #f3bd04;">
                     
                         <div class="card-block">
                             <h4 class="card-title text-white">PATIENTS</h4>
@@ -106,7 +106,7 @@
             
             <div class="col-12">
                 <div class="card">
-                    <div class="card-header border-0" style="background-color: #667db6;">
+                    <div class="card-header border-0" style="background-color:  #f3bd04;">
                         <div class="row align-items-center">
                             <div class="col">
                                 <h3 class="mb-0 text-uppercase text-white" id="titletable">APPOINTMENT FOR TODAY</h3>
@@ -129,6 +129,42 @@
                                     <td>{{$apps->id}}</td>
                                     <td>{{$apps->user->name ?? ''}}</td>
                                     <td>{{$apps->symptoms ?? ''}}</td>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header border-0" style="background-color:  #f3bd04;">
+                        <div class="row align-items-center">
+                            <div class="col">
+                                <h3 class="mb-0 text-uppercase text-white" id="titletable">All Feedback</h3>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    <div class="table-responsive mt-2">
+                        <table class="table align-items-center table-flush datatable-table display" cellspacing="0" width="100%">
+                            <thead class="thead-light">
+                                <tr>
+                                    <th scope="col">Patient Name</th>
+                                    <th scope="col">Feedback</th>
+                                    <th scope="col">Rate</th>
+                                </tr>
+                            </thead>
+                            <tbody class="text-uppercase font-weight-bold">
+                                @foreach($feedbacks as $feed)
+                                <tr>
+                                    <td>{{$feed->user->name}}</td>
+                                    <td>{{$feed->feedback ?? ''}}</td>
+                                    <td>
+                                         @for($x = 1; $x <= $feed->stars; $x++)
+                                            ⭐
+                                        @endfor
+                                    </td>
                                 </tr>
                                 @endforeach
                             </tbody>

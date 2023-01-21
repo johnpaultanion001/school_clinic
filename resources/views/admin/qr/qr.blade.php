@@ -84,6 +84,7 @@
               <tr>
                 <th scope="col">Appointment ID</th>
                 <th scope="col">Ref Number</th>
+                <th scope="col">Symptoms</th>
                 <th scope="col">Appointment Date & Time</th>
                 <th scope="col">Status</th>
                 <th scope="col">Admin Comment</th>
@@ -206,6 +207,9 @@ var qr_code = null;
                         </td>
                         <td>
                         `+value.ref_number+`
+                        </td>
+                        <td>
+                        `+value.symptoms+`
                         </td>
                         <td>
                         `+value.date_time+`

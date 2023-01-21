@@ -17078,15 +17078,7 @@ footer .pull-center {
   }
 }
 
-.card .card-header {
-  border-radius: 3px;
-  padding: 1rem 15px;
-  margin-left: 15px;
-  margin-right: 15px;
-  margin-top: -30px;
-  border: 0;
-  background: linear-gradient(60deg, #eee, #409444);
-}
+
 
 .card .card-header .title {
   color: #ffffff;

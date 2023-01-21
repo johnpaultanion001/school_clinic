@@ -33,6 +33,8 @@ Route::group(['prefix' => 'patient', 'as' => 'patient.', 'namespace' => 'Patient
     
      // Home
      Route::get('home', 'HomeController@index')->name('home');
+
+     Route::resource('feedback', 'FeedbackController');
 });
 
 Route::group(['prefix' => 'admin', 'as' => 'admin.', 'namespace' => 'Admin', 'middleware' => ['auth']], function () {

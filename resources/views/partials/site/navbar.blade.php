@@ -77,6 +77,7 @@
                       <a href="/login" class="dropdown-item">
                           <i class="fas fa-sign-in-alt fa-lg p-2"></i> Login
                       </a>
+                      
                       <a href="/register?user_type=student" class="dropdown-item">
                         <i class="fas fa-user-plus fa-lg p-2"></i> Register Student
                       </a>

@@ -74,17 +74,18 @@
                                   </div>
 
                                   <div class="col-sm-12">
-                                  @if($appointment->status == 'PENDING')
-                                    <button type="button" name="edit" edit="{{  $appointment->id ?? '' }}"  class="edit btn btn-sm btn-primary">Edit Info.</button>
-                                    <button type="button" name="cancel" cancel="{{  $appointment->id ?? '' }}"  class="cancel btn btn-sm btn-danger">Cancel</button>
-                                  @elseif($appointment->status == 'APPROVED')
-                                  <button type="button" name="cancel" cancel="{{  $appointment->id ?? '' }}"  class="cancel btn btn-sm btn-danger">Cancel</button>
-                                  @else
-                                    <br>
-                                      <h6 class="card-subtitle mb-2 text-muted">Admin Comment:</h6>
-                                      <p class="card-text">{{$appointment->comment ?? ''}}</p>
-                                  @endif
-                                      
+                                  
+                                    @if($appointment->status == 'PENDING')
+                                      <button type="button" name="edit" edit="{{  $appointment->id ?? '' }}"  class="edit btn btn-sm btn-primary">Edit Info.</button>
+                                      <button type="button" name="cancel" cancel="{{  $appointment->id ?? '' }}"  class="cancel btn btn-sm btn-danger">Cancel</button>
+                                    @else
+                                      <br>
+                                        <h6 class="card-subtitle mb-2 text-muted">Admin Comment:</h6>
+                                        <p class="card-text">{{$appointment->comment ?? ''}}</p>
+                                    @endif
+                                    @if($appointment->status == 'COMPLETED')
+                                      <button type="button" name="feedback" feedback="{{  $appointment->id ?? '' }}"  class="feedback btn btn-sm btn-primary">Give us a feedback</button>
+                                    @endif
                                   </div>
                                 </div>
                                
@@ -207,6 +208,76 @@
         </div>
       </div>
   </form>
+
+  <form method="post" id="myFeedback" >
+      @csrf
+      <div class="modal fade" id="feedbackModal" role="dialog">
+        <div class="modal-dialog modal-lg modal-dialog-centered" role="document">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h5 class="modal-title">feedback</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <i class="material-icons">clear</i>
+              </button>
+            </div>
+            <div class="modal-body">
+          
+                  <div class="row">
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="bmd-label-floating">Your Name</label>
+                        <input type="text" class="form-control" value="{{Auth::user()->name}}" readonly>
+                      </div>
+                    </div>
+                    <div class="col-md-6">
+                      <div class="form-group">
+                        <label class="bmd-label-floating">Your Contact Number</label>
+                        <input type="text" class="form-control" value="{{Auth::user()->contact_number}}" readonly>
+                      </div>
+                    </div>
+                    <div class="col-md-12">
+                      <div class="form-group">
+                        <label class="bmd-label-floating">Your Address</label>
+                        <input type="text" class="form-control" value="{{Auth::user()->address}}" readonly>
+                      </div>
+                    </div>
+                
+                     
+                    
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="label-control">Feedback <span class="text-danger">*</span></label>
+                          <textarea name="feedback" id="feedback" class="form-control"></textarea>
+                          <span class="invalid-feedback" role="alert">
+                              <strong id="error-feedback"></strong>
+                          </span>
+                        </div>
+                      </div>
+                      <div class="col-md-12">
+                        <div class="form-group">
+                          <label class="label-control">Rate us <span class="text-danger">*</span></label> <br>
+                          <input type="checkbox" class="star text-warning mr-2"  id="star1" >
+                          <input type="checkbox" class="star text-warning mr-2"  id="star2" >
+                          <input type="checkbox" class="star text-warning mr-2"  id="star3" >
+                          <input type="checkbox" class="star text-warning mr-2"  id="star4" >
+                          <input type="checkbox" class="star text-warning mr-2"  id="star5" >
+                        </div>
+                      </div>
+                    </div>
+
+                  <input type="hidden" name="total_stars" id="total_stars" value="5" readonly />
+                  <input type="hidden" name="appointment_id" id="appointment_id" readonly />
+                  
+                
+            </div>
+            <div class="modal-footer">
+              <input type="submit" name="feedback_action_button" id="feedback_action_button" class="btn btn-primary" value="Save" />
+              <button type="button" class="btn btn-danger" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
+      </div>
+  </form>
 @endsection
 
 
@@ -292,13 +363,7 @@ tomorrow.setDate(today.getDate() + 1);
             $("#action_button").attr("value", "Loading..");
         },
         success:function(data){
-            if($('#action').val() == 'Edit'){
-                $("#action_button").attr("disabled", false);
-                $("#action_button").attr("value", "Update");
-            }else{
-                $("#action_button").attr("disabled", false);
-                $("#action_button").attr("value", "Submit");
-            }
+             
 
             if(data.errors){
                 $.each(data.errors, function(key,value){
@@ -461,6 +526,111 @@ tomorrow.setDate(today.getDate() + 1);
 
   });
 
+ 
+  $(document).on('click', '.feedback', function(){
+      $('#feedbackModal').modal('show');
+     
+      $('.form-control').removeClass('is-invalid');
+      var id = $(this).attr('feedback');
+      $('#appointment_id').val(id);
+      
+  });
+
+  $(document).on('click', '.star', function(){
+    var star = 5;
+    
+      if($('#star1').is(':checked'))
+      {
+        star =  star - 1;
+      }else
+      {
+        star =  star + 0;
+      }
+      if($('#star2').is(':checked'))
+      {
+        star =  star - 1;
+      }else
+      {
+        star =  star + 0;
+      }
+      if($('#star3').is(':checked'))
+      {
+        star =  star - 1;
+      }else
+      {
+        star =  star + 0;
+      }
+      if($('#star4').is(':checked'))
+      {
+        star =  star - 1;
+      }else
+      {
+        star =  star + 0;
+      }
+      if($('#star5').is(':checked'))
+      {
+        star =  star - 1;
+      }else
+      {
+        star =  star + 0;
+      }
+      $('#total_stars').val(star);
+  });
+
+  $('#myFeedback').on('submit', function(event){
+    event.preventDefault();
+    $('.form-control').removeClass('is-invalid')
+    var action_url = "{{ route('patient.feedback.store') }}";
+    var type = "POST";
+
+    $.ajax({
+        url: action_url,
+        method:type,
+        data:$(this).serialize(),
+        dataType:"json",
+        beforeSend:function(){
+            $("#feedback_action_button").attr("disabled", true);
+        },
+        success:function(data){
+          $("#feedback_action_button").attr("disabled", false);
+      
+            
+
+            if(data.errors){
+                $.each(data.errors, function(key,value){
+                    
+                    if(key == $('#'+key).attr('id')){
+                        $('#'+key).addClass('is-invalid')
+                        $('#error-'+key).text(value)
+                    }
+                })
+            }
+           
+            if(data.success){
+                $('.form-control').removeClass('is-invalid')
+                $('#myForm')[0].reset();
+                $('#formModal').modal('hide');
+                $.confirm({
+                    title: 'Confirmation',
+                    content: data.success,
+                    type: 'green',
+                    buttons: {
+                            confirm: {
+                                text: 'confirm',
+                                btnClass: 'btn-blue',
+                                keys: ['enter', 'shift'],
+                                action: function(){
+                                    location.reload();
+                                }
+                            },
+                            
+                        }
+                    });
+            }
+        
+        }
+    });
+  });
 
 
 

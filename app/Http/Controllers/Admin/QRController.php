@@ -42,6 +42,7 @@ class QRController extends Controller
             $appointment_data[] = array(
                 'id'        => $app->id ?? '', 
                 'ref_number'        => $app->ref_number ?? '', 
+                'symptoms'          => $app->symptoms ?? '',
                 'date_time'        => $app->date .' at '. $app->time, 
                 'status'        => $app->status ?? '', 
                 'admin_comment'        => $app->comment ?? '', 

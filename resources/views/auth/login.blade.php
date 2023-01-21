@@ -66,7 +66,10 @@
                
                 <button type="submit" class="btn btn-primary btn-lg"> Login </button>
               </div>
-              <p class="description text-center">Not a member? <a href="/register">Register Now</a> </p>
+              <p class="description text-center">Not a member? <br>
+              <a href="/register?user_type=student">Register as a student?</a>
+              <br> <a href="/register?user_type=teacher">Register as a teacher?</a>
+              <br> <a href="/register?user_type=non_personnel">Register as a non personnel?</a> </p>
               <p class="description text-center"><a href="/password/reset">Forgot your password?</a></p>
               <br><br>
             </form>

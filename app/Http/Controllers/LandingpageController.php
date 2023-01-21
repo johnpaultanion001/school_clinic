@@ -3,14 +3,14 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Announcements;
+use App\Models\Feedback;
 
 class LandingpageController extends Controller
 {
     public function index()
     {
-      
-        return view('welcome');
+        $feeedbacks = Feedback::latest()->paginate(6);
+        return view('welcome', compact('feeedbacks'));
     }
 
    
