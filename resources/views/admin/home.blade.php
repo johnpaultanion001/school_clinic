@@ -172,6 +172,56 @@
                     </div>
                 </div>
             </div>
+            
+<div class="card shadow">
+      <div
+          class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
+          <h2 class="m-0 font-weight-bold text-primary">Assestment</h2>
+          
+      </div>
+      <div class="card-body row">
+        <div class="col-md-4">
+            Category A <br>
+            - Jan <br>
+            - Mar <br>
+            - May <br>
+            - June <br>
+        </div>
+        <div class="col-md-4">
+            Category B <br>
+            - Feb <br>
+            - April <br>
+            - July <br>
+            - Aug <br>
+        </div>
+        <div class="col-md-4">
+            Category C <br>
+            - Sept <br>
+            - Oct <br>
+            - Nov <br>
+            - Dec <br>
+        </div>
+
+        <div class="col-md-12 mt-5">
+            Category A <br>
+            * Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.  <br>
+            
+        </div>
+        <div class="col-md-12 mt-5">
+            Category B <br>
+            * Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.  <br>
+            
+        </div>
+        <div class="col-md-12 mt-5">
+            Category C <br>
+            * Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book.  <br>
+            
+        </div>
+    </div>
+   
+</div>
+
+
           
         </div>
     </div>

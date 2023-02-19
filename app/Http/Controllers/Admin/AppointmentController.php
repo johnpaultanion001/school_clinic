@@ -110,6 +110,12 @@ class AppointmentController extends Controller
             Mail::to($appointment->user->email)
                 ->send(new EmailNotification($emailNotif));
         }
+
+        Notification::create([
+            'user_id' => $appointment->user_id,
+            'status' => "Your Appointment has been " . $message,
+            'link' => "/patient/appointment",
+        ]);
         
 
         return response()->json(['success' => 'Updated Successfully.']);

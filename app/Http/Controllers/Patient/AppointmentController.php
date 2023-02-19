@@ -7,6 +7,7 @@ use App\Models\Appointment;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use Validator;
+use App\Models\Notification;
 
 
 
@@ -40,8 +41,18 @@ class AppointmentController extends Controller
                                         ->get()
                                         ->count();
 
+        $oneDateAndTimeOnly = Appointment::where('status', 'PENDING')
+                                        ->where('date', $request->input('date'))
+                                        ->where('time', $request->input('time'))
+                                        ->get()
+                                        ->count();
+
         if($onepending > 0){
             return response()->json(['onepending' => 'You have already Pending Record, Wait for admin response']);
+        }
+
+        if($oneDateAndTimeOnly > 0){
+            return response()->json(['oneDateAndTimeOnly' => 'This date and time has been appointed']);
         }
         
         Appointment::create([
@@ -51,6 +62,12 @@ class AppointmentController extends Controller
             'date' => $request->input('date'),
             'time' => $request->input('time'),
             'symptoms' => $request->input('symptoms'),
+        ]);
+
+        Notification::create([
+            'user_id' => 1,
+            'status' => "Added appointment by " .$username,
+            'link' => "/admin/appointment",
         ]);
 
         return response()->json(['success' => 'Appointment successfully added.']);

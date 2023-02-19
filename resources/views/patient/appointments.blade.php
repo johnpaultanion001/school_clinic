@@ -385,6 +385,26 @@ tomorrow.setDate(today.getDate() + 1);
                                 btnClass: 'btn-blue',
                                 keys: ['enter', 'shift'],
                                 action: function(){
+                                  location.reload();
+                                }
+                            },
+                            
+                        }
+                    });
+            }
+            if(data.oneDateAndTimeOnly)
+            {
+              $.confirm({
+                    title: 'Error Message',
+                    content: data.oneDateAndTimeOnly,
+                    type: 'red',
+                    buttons: {
+                            confirm: {
+                                text: 'confirm',
+                                btnClass: 'btn-blue',
+                                keys: ['enter', 'shift'],
+                                action: function(){
+                                  location.reload();
                                 }
                             },
                             

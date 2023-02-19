@@ -103,6 +103,31 @@
       content: "\2606";
       position: absolute;
     }
+    #notification_bell{
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      margin-right: 40px;
+      margin-bottom: 10px; 
+      z-index: 9999;
+      background: #C0C0C0;
+    }
+    .dropdown_list{
+      position: fixed;
+      bottom: 0;
+      right: 0;
+      margin-right: 5px;
+      margin-bottom: 65px; 
+      z-index: 9999;
+    }
+    #click_notif{
+      border-top: solid 1px #c0c0c0;
+      cursor: pointer;
+    }
+    #click_notif:hover{
+      background-color: #8E0E00 !important;
+      color: white;
+    }
   </style>
 </head>
 
@@ -112,7 +137,44 @@
   @yield('content')
 
   @yield('footer')
+  @if (Auth::user())
+  @php(
+          [
+            $notis = App\Models\Notification::where('user_id', Auth::user()->id ?? ''  )->where('isRead', 0)->count(),
+            $allnotis =  App\Models\Notification::where('user_id', Auth::user()->id ?? ''  )->orderBy('isRead', 'asc')->latest()->get()
+          ]
+        )
+
+  <div id="notification_bell" class="btn btn btn-round">
+      <i class="fas fa-bell fa-2x" style="color: #f3bd04;"></i>
+      <span class="counter counter-lg ">
+        
+
+          @if($notis > 0)
+            <i class="fas fa-circle text-warning"></i>
+          @else
+
+          @endif
+      </span> 
+  </div>
+
+  <div class="card dropdown_list" style="max-width: 400px; max-height: 200px; overflow-x: scroll; overflow-y: scroll;">
+
+      <ul class="list-group list-group-flush">
+              @if(count($allnotis) > 0)
+                @foreach($allnotis as $an)
+                  <li id="click_notif" click_notif="{{$an->id}}" class="list-group-item">
+                    <i class="fas fa-bell {{ $an->isRead == 0 ? 'text-success' : '' }}"></i> <br>
+                    {{$an->status}}
+                  </li>  
+                @endforeach
+              @else
+                <li class="list-group-item">No Notification</li>
+              @endif
+        </ul>
   
+  </div>
+  @endif
 
   <!--   Core JS Files   -->
   
